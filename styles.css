@@ -76,8 +76,26 @@ button:hover {
     padding: 0 10px;
 }
 
+.borrarCarrito {
+    background-color: darkgrey;
+}
+.borrarCarrito:hover {
+    background-color: grey;
+}
+
+.comprarCarrito {
+    background-color: green;
+}
+.comprarCarrito:hover {
+    background-color: darkgreen;
+}
+
 .productosCarrito {
     font-weight: bold;
     margin-right: 10px;
     margin-left: 10px;
+}
+
+.card:hover {
+    transform: scale(1.02);
 }
