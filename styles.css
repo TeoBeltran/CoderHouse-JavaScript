@@ -48,16 +48,31 @@ button:hover {
     background-color: #0056b3;
 }
 
+.Cartas {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .card {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 20px;
     margin-top: 20px;
+    margin-right: 2%;
+    margin-left: 2%;
+    width: 45%;
+    box-sizing: border-box;
+    display: inline-block;
 }
 
 .card h2 {
     color: #333;
+}
+.card:hover {
+    transform: scale(1.02);
 }
 
 .black-box {
@@ -94,8 +109,4 @@ button:hover {
     font-weight: bold;
     margin-right: 10px;
     margin-left: 10px;
-}
-
-.card:hover {
-    transform: scale(1.02);
 }

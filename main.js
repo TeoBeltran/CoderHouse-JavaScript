@@ -25,7 +25,7 @@ function registrarUsuario() {
     }
 }
 
-registrarUsuario();
+//registrarUsuario();
 
 
 function Producto(nombre, desc, precio) {
@@ -99,11 +99,6 @@ borrarCarrito.addEventListener("click", function() {
 
 var comprarCarrito = document.querySelector('.comprarCarrito')
 comprarCarrito.addEventListener("click", function() {
-    /*cantidadProductos = document.querySelector('.cantidadProductos')
-    cantidadProductos.textContent = 0
-
-    precioProductos = document.querySelector('.precioProductos')
-    precioProductos.textContent = 0*/
-
     alert("Funcion no implementada");
 });
+
