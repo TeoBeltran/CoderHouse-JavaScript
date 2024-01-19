@@ -58,7 +58,6 @@ productos.forEach(function(producto, index) {
     desc.textContent = Producto1.desc;
 
     var precio = document.createElement("p");
-    precio.classList.add(Producto1.nombre)
     precio.textContent = Producto1.precio;
 
     var button = document.createElement("button");
@@ -87,4 +86,13 @@ productos.forEach(function(producto, index) {
     productoCard1.appendChild(card);
 });
 
+var borrarCarrito = document.querySelector('.borrarCarrito')
+borrarCarrito.addEventListener("click", function() {
+    cantidadProductos = document.querySelector('.cantidadProductos')
+    cantidadProductos.textContent = 0
 
+    precioProductos = document.querySelector('.precioProductos')
+    precioProductos.textContent = 0
+
+    alert("Productos eliminados del carrito");
+});
