@@ -34,33 +34,44 @@ function Producto(nombre, desc, precio) {
     this.precio = precio;
 }
 
-var Producto1 = new Producto("Producto1", "Descripción del Producto1", 49.99);
+var productos = [
+    { nombre: "Producto 1", desc: "Descripción del Producto 1", precio: 29.99 },
+    { nombre: "Producto 2", desc: "Descripción del Producto 2", precio: 39.99 },
+    { nombre: "Producto 3", desc: "Descripción del Producto 3", precio: 49.99 }
+];
 
-var productoCard1 = document.getElementById("productoCard1");
+productos.forEach(function(producto, index) {
+    var Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
 
-var card = document.createElement("div");
-card.className = "card";
+    var productoCard1 = document.getElementById("productoCard1");
 
-var titulo = document.createElement("h2");
-titulo.textContent = Producto1.nombre;
+    var card = document.createElement("div");
+    card.className = "card";
 
-var blackBox = document.createElement("div");
-blackBox.className = "black-box";
+    var titulo = document.createElement("h2");
+    titulo.textContent = Producto1.nombre;
 
-var desc = document.createElement("p");
-desc.textContent = Producto1.desc;
+    var blackBox = document.createElement("div");
+    blackBox.className = "black-box";
 
-var button = document.createElement("button");
-button.textContent = "Comprar";
+    var desc = document.createElement("p");
+    desc.textContent = Producto1.desc;
 
-card.appendChild(titulo);
-card.appendChild(blackBox);
-card.appendChild(desc);
-card.appendChild(button);
+    var precio = document.createElement("p");
+    precio.textContent = "$" + Producto1.precio;
 
-productoCard1.appendChild(card);
+    var button = document.createElement("button");
+    button.textContent = "Comprar";
 
+    card.appendChild(titulo);
+    card.appendChild(blackBox);
+    card.appendChild(desc);
+    card.appendChild(precio);
+    card.appendChild(button);
 
-console.log("Nombre del producto: " + Producto1.nombre);
-console.log("Descripción del producto: " + Producto1.desc);
-console.log("Precio del producto: $" + Producto1.precio);
+    productoCard1.appendChild(card);
+    console.log("Nombre del producto: " + Producto1.nombre);
+    console.log("Descripción del producto: " + Producto1.desc);
+    console.log("Precio del producto: $" + Producto1.precio);
+});
+
