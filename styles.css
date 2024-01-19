@@ -47,3 +47,37 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.card h2 {
+    color: #333;
+}
+
+.black-box {
+    width: 100px;
+    height: 100px;
+    background-color: #000;
+    margin-bottom: 10px;
+}
+
+.Carrito {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0 10px;
+}
+
+.productosCarrito {
+    font-weight: bold;
+    margin-right: 10px;
+    margin-left: 10px;
+}
