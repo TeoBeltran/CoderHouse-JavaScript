@@ -25,7 +25,7 @@ function registrarUsuario() {
     }
 }
 
-//registrarUsuario();
+registrarUsuario();
 
 
 function Producto(nombre, desc, precio) {
@@ -43,7 +43,7 @@ var productos = [
 productos.forEach(function(producto, index) {
     var Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
 
-    var productoCard1 = document.getElementById("productoCard1");
+    var productoCard1 = document.getElementById("productoCard");
 
     var card = document.createElement("div");
     card.className = "card";
@@ -61,7 +61,7 @@ productos.forEach(function(producto, index) {
     precio.textContent = Producto1.precio;
 
     var button = document.createElement("button");
-    button.textContent = "Comprar";
+    button.textContent = "Agregar al carrito";
 
     button.addEventListener("click", function() {
         cantidadProductos = document.querySelector('.cantidadProductos')
@@ -95,4 +95,15 @@ borrarCarrito.addEventListener("click", function() {
     precioProductos.textContent = 0
 
     alert("Productos eliminados del carrito");
+});
+
+var comprarCarrito = document.querySelector('.comprarCarrito')
+comprarCarrito.addEventListener("click", function() {
+    /*cantidadProductos = document.querySelector('.cantidadProductos')
+    cantidadProductos.textContent = 0
+
+    precioProductos = document.querySelector('.precioProductos')
+    precioProductos.textContent = 0*/
+
+    alert("Funcion no implementada");
 });
