@@ -35,9 +35,9 @@ function Producto(nombre, desc, precio) {
 }
 
 var productos = [
-    { nombre: "Producto 1", desc: "Descripción del Producto 1", precio: 29.99 },
-    { nombre: "Producto 2", desc: "Descripción del Producto 2", precio: 39.99 },
-    { nombre: "Producto 3", desc: "Descripción del Producto 3", precio: 49.99 }
+    { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
+    { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
+    { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 }
 ];
 
 productos.forEach(function(producto, index) {
@@ -58,10 +58,25 @@ productos.forEach(function(producto, index) {
     desc.textContent = Producto1.desc;
 
     var precio = document.createElement("p");
-    precio.textContent = "$" + Producto1.precio;
+    precio.classList.add(Producto1.nombre)
+    precio.textContent = Producto1.precio;
 
     var button = document.createElement("button");
     button.textContent = "Comprar";
+
+    button.addEventListener("click", function() {
+        cantidadProductos = document.querySelector('.cantidadProductos')
+        var valor = parseInt(cantidadProductos.textContent)
+        var newValor = valor + 1
+        cantidadProductos.textContent = newValor
+
+        precioProductos = document.querySelector('.precioProductos')
+        var valor2 = parseFloat(precioProductos.textContent)
+        var newValor2 = valor2 + Producto1.precio
+        precioProductos.textContent = newValor2
+
+        alert("Producto agregado al carrito");
+    });
 
     card.appendChild(titulo);
     card.appendChild(blackBox);
@@ -70,8 +85,6 @@ productos.forEach(function(producto, index) {
     card.appendChild(button);
 
     productoCard1.appendChild(card);
-    console.log("Nombre del producto: " + Producto1.nombre);
-    console.log("Descripción del producto: " + Producto1.desc);
-    console.log("Precio del producto: $" + Producto1.precio);
 });
+
 
