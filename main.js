@@ -36,10 +36,8 @@ function Producto(nombre, desc, precio) {
 
 var Producto1 = new Producto("Producto1", "Descripción del Producto1", 49.99);
 
-// Actualizar la card del Producto1 en el HTML
 var productoCard1 = document.getElementById("productoCard1");
 
-// Crear elementos HTML con los datos del Producto1
 var card = document.createElement("div");
 card.className = "card";
 
@@ -55,13 +53,11 @@ desc.textContent = Producto1.desc;
 var button = document.createElement("button");
 button.textContent = "Comprar";
 
-// Agregar elementos al contenedor de la card
 card.appendChild(titulo);
 card.appendChild(blackBox);
 card.appendChild(desc);
 card.appendChild(button);
 
-// Agregar la card al contenedor en el HTML
 productoCard1.appendChild(card);
 
 
