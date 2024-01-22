@@ -49,7 +49,6 @@ button:hover {
 }
 
 .Cartas {
-    text-align: center;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -59,7 +58,8 @@ button:hover {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
     margin-top: 20px;
     margin-right: 2%;
     margin-left: 2%;
@@ -92,10 +92,17 @@ button:hover {
 }
 
 .borrarCarrito {
-    background-color: darkgrey;
+    background-color: transparent;
+    color: red;
+    border: 1px solid rgba(255, 0, 0, 0.541);
+    border-radius: 4px;
+    
 }
 .borrarCarrito:hover {
-    background-color: grey;
+    background-color: rgba(255, 0, 0, 0.541);
+    color: white;
+    border: 1px solid rgba(255, 0, 0, 0.541);
+    border-radius: 4px;
 }
 
 .comprarCarrito {

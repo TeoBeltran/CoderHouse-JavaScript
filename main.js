@@ -5,15 +5,15 @@ function registrarUsuario() {
     let apellido = prompt("Ingrese su apellido:");
     let edad = parseInt(prompt("Ingrese su edad:"));
 
-    let contador = 0;
+    //let contador = 0;
     while (contador < 2) {
-        if(contador == 1) {
+        /*if(contador == 1) {
             alert("¡Hola otra vez, " + nombre + "!");
         }
-        else{
+        else{*/
             alert("¡Hola " + nombre + "!");
-        }
-        contador++;
+        /*}
+        contador++;*/
     }
 
     if (edad > 0) {
@@ -37,7 +37,9 @@ function Producto(nombre, desc, precio) {
 var productos = [
     { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
     { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
-    { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 }
+    { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 },
+    { nombre: "Producto4", desc: "Descripción del Producto 4", precio: 75.00 },
+    { nombre: "Producto5", desc: "Descripción del Producto 5", precio: 98.00 }
 ];
 
 productos.forEach(function(producto, index) {
