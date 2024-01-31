@@ -5,15 +5,8 @@ function registrarUsuario() {
     let apellido = prompt("Ingrese su apellido:");
     let edad = parseInt(prompt("Ingrese su edad:"));
 
-    //let contador = 0;
     while (contador < 2) {
-        /*if(contador == 1) {
-            alert("¡Hola otra vez, " + nombre + "!");
-        }
-        else{*/
-            alert("¡Hola " + nombre + "!");
-        /*}
-        contador++;*/
+        alert("¡Hola " + nombre + "!");
     }
 
     if (edad > 0) {
