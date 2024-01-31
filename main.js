@@ -27,7 +27,7 @@ function Producto(nombre, desc, precio) {
     this.precio = precio;
 }
 
-var productos = [
+let productos = [
     { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
     { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
     { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 },
@@ -36,37 +36,37 @@ var productos = [
 ];
 
 productos.forEach(function(producto, index) {
-    var Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
+    let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
 
-    var productoCard1 = document.getElementById("productoCard");
+    let productoCard1 = document.getElementById("productoCard");
 
-    var card = document.createElement("div");
+    let card = document.createElement("div");
     card.className = "card";
 
-    var titulo = document.createElement("h2");
+    let titulo = document.createElement("h2");
     titulo.textContent = Producto1.nombre;
 
-    var blackBox = document.createElement("div");
+    let blackBox = document.createElement("div");
     blackBox.className = "black-box";
 
-    var desc = document.createElement("p");
+    let desc = document.createElement("p");
     desc.textContent = Producto1.desc;
 
-    var precio = document.createElement("p");
+    let precio = document.createElement("p");
     precio.textContent = Producto1.precio;
 
-    var button = document.createElement("button");
+    let button = document.createElement("button");
     button.textContent = "Agregar al carrito";
 
     button.addEventListener("click", function() {
         cantidadProductos = document.querySelector('.cantidadProductos')
-        var valor = parseInt(cantidadProductos.textContent)
-        var newValor = valor + 1
+        let valor = parseInt(cantidadProductos.textContent)
+        let newValor = valor + 1
         cantidadProductos.textContent = newValor
 
         precioProductos = document.querySelector('.precioProductos')
-        var valor2 = parseFloat(precioProductos.textContent)
-        var newValor2 = valor2 + Producto1.precio
+        let valor2 = parseFloat(precioProductos.textContent)
+        let newValor2 = valor2 + Producto1.precio
         precioProductos.textContent = newValor2
 
         alert("Producto agregado al carrito");
@@ -81,7 +81,7 @@ productos.forEach(function(producto, index) {
     productoCard1.appendChild(card);
 });
 
-var borrarCarrito = document.querySelector('.borrarCarrito')
+let borrarCarrito = document.querySelector('.borrarCarrito')
 borrarCarrito.addEventListener("click", function() {
     cantidadProductos = document.querySelector('.cantidadProductos')
     cantidadProductos.textContent = 0
@@ -92,7 +92,7 @@ borrarCarrito.addEventListener("click", function() {
     alert("Productos eliminados del carrito");
 });
 
-var comprarCarrito = document.querySelector('.comprarCarrito')
+let comprarCarrito = document.querySelector('.comprarCarrito')
 comprarCarrito.addEventListener("click", function() {
     alert("Funcion no implementada");
 });
