@@ -80,7 +80,7 @@ productos.forEach(function(producto, index) {
 
     productoCard1.appendChild(card);
 });
-
+/*
 let borrarCarrito = document.querySelector('.borrarCarrito')
 borrarCarrito.addEventListener("click", function() {
     cantidadProductos = document.querySelector('.cantidadProductos')
@@ -92,8 +92,28 @@ borrarCarrito.addEventListener("click", function() {
     alert("Productos eliminados del carrito");
 });
 
+document.addEventListener("keyup", function(event) {
+    if (event.key === "Delete") {
+        borrarCarrito.click();
+    }
+});
+*/
+document.querySelector('.borrarCarrito').onclick = function() {
+    document.querySelector('.cantidadProductos').textContent = 0;
+    document.querySelector('.precioProductos').textContent = 0;
+    alert("Productos eliminados del carrito");
+};
+document.addEventListener('keyup', function(event) {
+    if (event.key === 'Delete') {
+        document.querySelector('.cantidadProductos').textContent = 0;
+        document.querySelector('.precioProductos').textContent = 0;
+        alert("Productos eliminados del carrito");
+    }
+});
+
+
 let comprarCarrito = document.querySelector('.comprarCarrito')
 comprarCarrito.addEventListener("click", function() {
-    alert("Funcion no implementada");
+    alert("Función no implementada");
 });
 
