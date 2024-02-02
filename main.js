@@ -5,13 +5,7 @@ function registrarUsuario() {
     let apellido = prompt("Ingrese su apellido:");
     let edad = parseInt(prompt("Ingrese su edad:"));
 
-    while (contador < 2) {
-        alert("¡Hola " + nombre + "!");
-    }
-
     if (edad > 0) {
-        console.log("Prueba de consol.log correcta!");
-
         alert("¡Registro exitoso!");
     } else {
         alert("Por favor, complete todos los campos correctamente.");
@@ -43,6 +37,23 @@ if (localStorage.getItem('productos')) {
     localStorage.setItem('productos', JSON.stringify(productos));
 }
 
+// Cantidad de productos en el carrito y su precio almacenados en localStorage
+let cantProdCarrito;
+if (localStorage.getItem('cantidadProductos')) {
+    cantProdCarrito = parseInt(localStorage.getItem('cantidadProductos'));
+} else {
+    cantProdCarrito = 0;
+}
+document.querySelector('.cantidadProductos').textContent = cantProdCarrito;
+
+let precioProdCarrito;
+if (localStorage.getItem('precioProductos')) {
+    precioProdCarrito = parseFloat(localStorage.getItem('precioProductos'));
+} else {
+    precioProdCarrito = 0;
+}
+document.querySelector('.precioProductos').textContent = precioProdCarrito;
+
 productos.forEach(function(producto, index) {
     let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
 
@@ -68,14 +79,16 @@ productos.forEach(function(producto, index) {
 
     button.addEventListener("click", function() {
         cantidadProductos = document.querySelector('.cantidadProductos')
-        let valor = parseInt(cantidadProductos.textContent)
-        let newValor = valor + 1
-        cantidadProductos.textContent = newValor
+        let cantProd = parseInt(cantidadProductos.textContent)
+        let newCantProd = cantProd + 1
+        cantidadProductos.textContent = newCantProd
+        localStorage.setItem('cantidadProductos', newCantProd);
 
         precioProductos = document.querySelector('.precioProductos')
-        let valor2 = parseFloat(precioProductos.textContent)
-        let newValor2 = valor2 + Producto1.precio
-        precioProductos.textContent = newValor2
+        let precioCarrito = parseFloat(precioProductos.textContent)
+        let newPrecioC = precioCarrito + Producto1.precio
+        precioProductos.textContent = newPrecioC
+        localStorage.setItem('precioProductos', newPrecioC);
 
         alert("Producto agregado al carrito");
     });
@@ -88,37 +101,28 @@ productos.forEach(function(producto, index) {
 
     productoCard1.appendChild(card);
 });
-/*
-let borrarCarrito = document.querySelector('.borrarCarrito')
-borrarCarrito.addEventListener("click", function() {
-    cantidadProductos = document.querySelector('.cantidadProductos')
-    cantidadProductos.textContent = 0
 
-    precioProductos = document.querySelector('.precioProductos')
-    precioProductos.textContent = 0
-
-    alert("Productos eliminados del carrito");
-});
-
-document.addEventListener("keyup", function(event) {
-    if (event.key === "Delete") {
-        borrarCarrito.click();
-    }
-});
-*/
+// Borrar el localStorage del carrito
 document.querySelector('.borrarCarrito').onclick = function() {
     document.querySelector('.cantidadProductos').textContent = 0;
     document.querySelector('.precioProductos').textContent = 0;
+    
+    localStorage.setItem('cantidadProductos', 0);
+    localStorage.setItem('precioProductos', 0);
+
     alert("Productos eliminados del carrito");
 };
 document.addEventListener('keyup', function(event) {
     if (event.key === 'Delete') {
         document.querySelector('.cantidadProductos').textContent = 0;
         document.querySelector('.precioProductos').textContent = 0;
+        
+        localStorage.setItem('cantidadProductos', 0);
+        localStorage.setItem('precioProductos', 0);
+        
         alert("Productos eliminados del carrito");
     }
 });
-
 
 let comprarCarrito = document.querySelector('.comprarCarrito')
 comprarCarrito.addEventListener("click", function() {
