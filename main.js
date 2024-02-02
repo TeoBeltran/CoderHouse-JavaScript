@@ -14,7 +14,6 @@ function registrarUsuario() {
 
 //registrarUsuario();
 
-
 function Producto(nombre, desc, precio) {
     this.nombre = nombre;
     this.desc = desc;
@@ -80,7 +79,7 @@ productos.forEach(function(producto, index) {
     button.addEventListener("click", function() {
         cantidadProductos = document.querySelector('.cantidadProductos')
         let cantProd = parseInt(cantidadProductos.textContent)
-        let newCantProd = cantProd + 1
+        let newCantProd = cantProd + 1 //Podría ser cantProd++ en vez de +1
         cantidadProductos.textContent = newCantProd
         localStorage.setItem('cantidadProductos', newCantProd);
 
