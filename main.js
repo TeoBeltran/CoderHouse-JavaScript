@@ -27,15 +27,21 @@ function Producto(nombre, desc, precio) {
     this.precio = precio;
 }
 
-let productos = JSON.parse(localStorage.getItem('productos')) || [
-    { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
-    { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
-    { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 },
-    { nombre: "Producto4", desc: "Descripción del Producto 4", precio: 75.00 },
-    { nombre: "Producto5", desc: "Descripción del Producto 5", precio: 98.00 }
-];
+let productos;
 
-localStorage.setItem('productos', JSON.stringify(productos));
+if (localStorage.getItem('productos')) {
+    productos = JSON.parse(localStorage.getItem('productos'));
+} else {
+    productos = [
+        { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
+        { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
+        { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 },
+        { nombre: "Producto4", desc: "Descripción del Producto 4", precio: 75.00 },
+        { nombre: "Producto5", desc: "Descripción del Producto 5", precio: 98.00 }
+    ];
+
+    localStorage.setItem('productos', JSON.stringify(productos));
+}
 
 productos.forEach(function(producto, index) {
     let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
