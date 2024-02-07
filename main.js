@@ -5,14 +5,10 @@ function registrarUsuario() {
     let apellido = prompt("Ingrese su apellido:");
     let edad = parseInt(prompt("Ingrese su edad:"));
 
-    if (edad > 0) {
-        alert("¡Registro exitoso!");
-    } else {
-        alert("Por favor, complete todos los campos correctamente.");
-    }
+    edad > 0 ? alert("¡Registro exitoso!") : alert("Por favor, complete todos los campos correctamente.");
 }
 
-//registrarUsuario();
+registrarUsuario();
 
 function Producto(nombre, desc, precio) {
     this.nombre = nombre;
@@ -79,7 +75,7 @@ productos.forEach(function(producto, index) {
     button.addEventListener("click", function() {
         cantidadProductos = document.querySelector('.cantidadProductos')
         let cantProd = parseInt(cantidadProductos.textContent)
-        let newCantProd = cantProd + 1 //Podría ser cantProd++ en vez de +1
+        let newCantProd = cantProd ++ //Podría ser cantProd + 1 en vez de ++
         cantidadProductos.textContent = newCantProd
         localStorage.setItem('cantidadProductos', newCantProd);
 
