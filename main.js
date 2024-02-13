@@ -20,11 +20,22 @@ let carrito = []
 
 let productos;
 
+// Para modificar un producto ya guardado en local storage
+document.addEventListener('DOMContentLoaded', function() {
+    let volverCargarButton = document.querySelector('.volverCargar');
+
+    volverCargarButton.addEventListener('click', function() {
+        localStorage.removeItem('productos');
+
+        location.reload();
+    });
+});
+
 if (localStorage.getItem('productos')) {
     productos = JSON.parse(localStorage.getItem('productos'));
 } else {
     productos = [
-        { nombre: "AAAAAAAAA", desc: "Descripción del Producto 1", precio: 29.99 },
+        { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
         { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
         { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 },
         { nombre: "Producto4", desc: "Descripción del Producto 4", precio: 75.00 },
