@@ -104,11 +104,26 @@ button:hover {
     border-radius: 4px;
 }
 
+.verCarrito {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+}
+.verCarrito:hover {
+    background-color: #0056b3;
+    border: 1px solid #0056b3;
+    border-radius: 4px;
+}
+
 .comprarCarrito {
     background-color: green;
+    border: 1px solid green;
+    border-radius: 4px;
 }
 .comprarCarrito:hover {
     background-color: darkgreen;
+    border: 1px solid green;
+    border-radius: 4px;
 }
 
 .productosCarrito {
@@ -118,5 +133,14 @@ button:hover {
 }
 
 .volverCargar {
+    background-color: transparent;
+    color: grey;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+.volverCargar:hover {
     background-color: grey;
+    color: white;
+    border: 1px solid grey;
+    border-radius: 4px;
 }
