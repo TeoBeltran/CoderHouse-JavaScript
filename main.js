@@ -1,3 +1,4 @@
+// Función para registrar un usuario
 function registrarUsuario() {
     alert("Bienvenido al formulario de registro.");
 
@@ -8,28 +9,58 @@ function registrarUsuario() {
     edad > 0 ? alert("¡Registro exitoso!") : alert("Por favor, complete todos los campos correctamente.");
 }
 
-//registrarUsuario();
-
+// Definición del constructor Producto
 function Producto(nombre, desc, precio) {
     this.nombre = nombre;
     this.desc = desc;
     this.precio = precio;
 }
 
-let carrito = []
+// Se obtiene el carrito almacenado en localStorage al cargar la página
+let carrito = localStorage.getItem('carrito') ? JSON.parse(localStorage.getItem('carrito')) : [];
 
-let productos;
+// Función para actualizar el carrito en el localStorage
+function actualizarLocalStorageCarrito() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+}
 
-// Para modificar un producto ya guardado en local storage
-document.addEventListener('DOMContentLoaded', function() {
-    let volverCargarButton = document.querySelector('.volverCargar');
+// Se obtiene el contenedor de la lista del carrito
+let listaCarrito = document.querySelector('.listaCarrito');
 
-    volverCargarButton.addEventListener('click', function() {
-        localStorage.removeItem('productos');
-
-        location.reload();
+// Función para actualizar la lista del carrito en la página
+function actualizarListaCarrito() {
+    listaCarrito.innerHTML = '';
+    carrito.forEach(function(producto) {
+        let productoItem = document.createElement('p');
+        productoItem.textContent = producto.nombre + ' - $' + producto.precio;
+        listaCarrito.appendChild(productoItem);
     });
-});
+}
+
+// Función para mostrar la cantidad de productos en el carrito
+function mostrarCantidadProductosCarrito() {
+    let cantidadProductos = document.querySelector('.cantidadProductos');
+    cantidadProductos.textContent = carrito.length;
+}
+
+// Función para mostrar el precio total de los productos en el carrito
+function mostrarPrecioTotalCarrito() {
+    let precioTotal = carrito.reduce((total, producto) => total + producto.precio, 0);
+    let precioProductos = document.querySelector('.precioProductos');
+    precioProductos.textContent = precioTotal.toFixed(2);
+}
+
+// Función para agregar un producto al carrito
+function agregarAlCarrito(producto) {
+    carrito.push(producto);
+    actualizarLocalStorageCarrito();
+    actualizarListaCarrito();
+    mostrarCantidadProductosCarrito();
+    mostrarPrecioTotalCarrito();
+}
+
+// Definición de los productos
+let productos;
 
 if (localStorage.getItem('productos')) {
     productos = JSON.parse(localStorage.getItem('productos'));
@@ -45,85 +76,58 @@ if (localStorage.getItem('productos')) {
     localStorage.setItem('productos', JSON.stringify(productos));
 }
 
-// Cantidad de productos en el carrito y su precio almacenados en localStorage
-let cantProdCarrito;
-if (localStorage.getItem('cantidadProductos')) {
-    cantProdCarrito = parseInt(localStorage.getItem('cantidadProductos'));
-} else {
-    cantProdCarrito = 0;
-}
-document.querySelector('.cantidadProductos').textContent = cantProdCarrito;
+// Función para cargar los productos en la página
+function cargarProductos() {
+    productos.forEach(function(producto, index) {
+        let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
 
-let precioProdCarrito;
-if (localStorage.getItem('precioProductos')) {
-    precioProdCarrito = parseFloat(localStorage.getItem('precioProductos'));
-} else {
-    precioProdCarrito = 0;
-}
-document.querySelector('.precioProductos').textContent = precioProdCarrito;
+        let productoCard1 = document.getElementById("productoCard");
 
-let listaCarrito = document.querySelector('.listaCarrito');
+        let card = document.createElement("div");
+        card.className = "card";
 
-function actualizarListaCarrito() {
-    listaCarrito.innerHTML = '';
-    carrito.forEach(function(producto) {
-        let productoItem = document.createElement('p');
-        productoItem.textContent = producto.nombre + ' - $' + producto.precio;
-        listaCarrito.appendChild(productoItem);
-    });
-}
+        let titulo = document.createElement("h2");
+        titulo.textContent = Producto1.nombre;
 
-productos.forEach(function(producto, index) {
-    let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
+        let blackBox = document.createElement("div");
+        blackBox.className = "black-box";
 
-    let productoCard1 = document.getElementById("productoCard");
+        let desc = document.createElement("p");
+        desc.textContent = Producto1.desc;
 
-    let card = document.createElement("div");
-    card.className = "card";
+        let precio = document.createElement("p");
+        precio.textContent = Producto1.precio;
 
-    let titulo = document.createElement("h2");
-    titulo.textContent = Producto1.nombre;
+        let button = document.createElement("button");
+        button.textContent = "Agregar al carrito";
 
-    let blackBox = document.createElement("div");
-    blackBox.className = "black-box";
+        button.addEventListener("click", function() {
+            agregarAlCarrito(Producto1);
+            alert("Producto agregado al carrito");
+        });
 
-    let desc = document.createElement("p");
-    desc.textContent = Producto1.desc;
+        card.appendChild(titulo);
+        card.appendChild(blackBox);
+        card.appendChild(desc);
+        card.appendChild(precio);
+        card.appendChild(button);
 
-    let precio = document.createElement("p");
-    precio.textContent = Producto1.precio;
-
-    let button = document.createElement("button");
-    button.textContent = "Agregar al carrito";
-
-    button.addEventListener("click", function() {
-        carrito.push(Producto1);
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-
-        let cantidadProductos = document.querySelector('.cantidadProductos')
-        let cantProd = parseInt(cantidadProductos.textContent)
-        let newCantProd = cantProd + 1 //Podría ser cantProd ++
-        cantidadProductos.textContent = newCantProd
-        localStorage.setItem('cantidadProductos', newCantProd);
-
-        let precioProductos = document.querySelector('.precioProductos')
-        let precioCarrito = parseFloat(precioProductos.textContent)
-        let newPrecioC = precioCarrito + Producto1.precio
-        precioProductos.textContent = newPrecioC
-        localStorage.setItem('precioProductos', newPrecioC);
-
-        alert("Producto agregado al carrito");
-        
-        actualizarListaCarrito();
+        productoCard1.appendChild(card);
     });
 
-    card.appendChild(titulo);
-    card.appendChild(blackBox);
-    card.appendChild(desc);
-    card.appendChild(precio);
-    card.appendChild(button);
+    // Al cargar la página, se actualiza la lista del carrito
+    actualizarListaCarrito();
+}
 
-    productoCard1.appendChild(card);
+// Para modificar un producto ya guardado en localStorage
+document.addEventListener('DOMContentLoaded', function() {
+    let volverCargarButton = document.querySelector('.volverCargar');
+
+    volverCargarButton.addEventListener('click', function() {
+        localStorage.removeItem('productos');
+
+        location.reload();
+    });
 });
 
 // Borrar el localStorage del carrito
@@ -131,23 +135,20 @@ document.querySelector('.borrarCarrito').onclick = function() {
     carrito = [];
     localStorage.removeItem('carrito');
 
-    document.querySelector('.cantidadProductos').textContent = 0;
-    document.querySelector('.precioProductos').textContent = 0;
+    mostrarCantidadProductosCarrito();
+    mostrarPrecioTotalCarrito();
     
-    localStorage.setItem('cantidadProductos', 0);
-    localStorage.setItem('precioProductos', 0);
-
     alert("Productos eliminados del carrito");
+
+    location.reload();
 };
 document.addEventListener('keyup', function(event) {
     if (event.key === 'Delete') {
         carrito = [];
+        localStorage.removeItem('carrito');
 
-        document.querySelector('.cantidadProductos').textContent = 0;
-        document.querySelector('.precioProductos').textContent = 0;
-        
-        localStorage.setItem('cantidadProductos', 0);
-        localStorage.setItem('precioProductos', 0);
+        mostrarCantidadProductosCarrito();
+        mostrarPrecioTotalCarrito();
         
         alert("Productos eliminados del carrito");
     }
@@ -162,4 +163,11 @@ let verCarritoButton = document.querySelector('.verCarrito');
 verCarritoButton.addEventListener("click", function() {
     window.location.href = 'carrito.html';
 });
+
+// Llamada para cargar los productos en la página
+cargarProductos();
+
+// Llamadas iniciales para mostrar la cantidad de productos y el precio total del carrito
+mostrarCantidadProductosCarrito();
+mostrarPrecioTotalCarrito();
 
