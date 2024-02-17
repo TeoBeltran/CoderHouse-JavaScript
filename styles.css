@@ -159,3 +159,19 @@ button:hover {
         border-radius: 4px;
     }
 }
+
+.eliminarProducto {
+    background-color: transparent;
+    color: red;
+    border: 1px solid rgba(255, 0, 0, 0.541);
+    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.eliminarProducto:hover {
+    background-color: rgba(255, 0, 0, 0.541);
+    color: white;
+    border: 1px solid rgba(255, 0, 0, 0.541);
+    border-radius: 4px;
+}

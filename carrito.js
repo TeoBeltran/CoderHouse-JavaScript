@@ -17,6 +17,7 @@ if (carrito !== null) {
 
         let botonEliminar = document.createElement('button');
         botonEliminar.textContent = 'Eliminar';
+        botonEliminar.className = 'eliminarProducto';
         botonEliminar.addEventListener('click', function() {
             eliminarProducto(index);
         });
@@ -62,8 +63,12 @@ function eliminarProducto(index) {
     if (typeof actualizarListaCarrito === 'function') {
         actualizarListaCarrito();
     }
-
-    location.reload();
+    
+    Swal.fire("Producto eliminado del carrito").then(() => {
+        setTimeout(function() {
+            location.reload();
+        }, 1); //El 1 es en milisegundos
+    });
 }
 
 // Actualizar el carrito
@@ -87,7 +92,39 @@ document.querySelector('.borrarCarrito').onclick = function() {
 // Comprar, no implementado
 let comprarCarrito = document.querySelector('.comprarCarrito')
 comprarCarrito.addEventListener("click", function() {
-    alert("Función no implementada");
+    
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+      });
+      swalWithBootstrapButtons.fire({
+        title: "Estas seguro?",
+        text: "No se podrá volver atrás",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "No, cancelar!",
+        cancelButtonText: "Si, estoy seguro",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Acción cancelada",
+                text: "No se compraron los productos",
+                icon: "error"
+            });        
+        } else if (
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Comprar",
+            text: "Función no implementada",
+            icon: "question"
+          });
+        }
+      });
 });
 
 // Volver a la pagina principal
