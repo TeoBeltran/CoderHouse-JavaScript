@@ -1,13 +1,106 @@
-// Función para registrar un usuario
+//Registrar un usuario
+
 function registrarUsuario() {
-    alert("Bienvenido al formulario de registro.");
+    return new Promise((resolve, reject) => {
+        alert("Bienvenido al formulario de registro.");
 
-    let nombre = prompt("Ingrese su nombre:");
-    let apellido = prompt("Ingrese su apellido:");
-    let edad = parseInt(prompt("Ingrese su edad:"));
+        let nombre = prompt("Ingrese su nombre:");
+        let apellido = prompt("Ingrese su apellido:");
+        let edad = parseInt(prompt("Ingrese su edad:"));
 
-    edad > 0 ? alert("¡Registro exitoso!") : alert("Por favor, complete todos los campos correctamente.");
+        if (nombre && apellido && !isNaN(edad) && edad >= 18) {
+            resolve("¡Registro exitoso!");
+        } else {
+            reject("Error: Por favor, complete todos los campos correctamente.");
+        }
+    });
 }
+
+function manejarRegistro() {
+    registrarUsuario()
+        .then((mensaje) => {
+            alert(mensaje);
+        })
+        .catch((error) => {
+            alert(error);
+
+            manejarRegistro();
+        });
+}
+
+manejarRegistro();
+
+//SE ESTÁ TRABAJANDO CON ESTO COMENTADO PARA BUSCAR LA SOLUCION A UN PROBLEMA QUE PASA
+//SI CUANDO SALE EL CUADRO DE DIALOGO EL USUARIO HACES CLICK FUERA DE ESTE,
+//EL CUADRO SE SALE, Y SE PUEDE NAVEGAR LIBREMENTE SIN TENER QUE REGISTRARSE
+
+// Registrar Usuario
+/*
+function registrarUsuario() {
+    return new Promise((resolve, reject) => {
+        Swal.fire({
+            title: 'Registro de Usuario',
+            html:
+                '<input id="nombre" class="swal2-input" placeholder="Nombre">' +
+                '<input id="apellido" class="swal2-input" placeholder="Apellido">' +
+                '<input id="edad" type="number" class="swal2-input" placeholder="Edad">',
+            focusConfirm: false,
+            preConfirm: () => {
+                const nombre = Swal.getPopup().querySelector('#nombre').value;
+                const apellido = Swal.getPopup().querySelector('#apellido').value;
+                const edad = Swal.getPopup().querySelector('#edad').value;
+                if (nombre && apellido && !isNaN(edad) && edad >= 18) {
+                    resolve({ nombre, apellido, edad });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Por favor complete todos los campos correctamente.',
+                        icon: 'error'
+                    }).then(() => {
+                        registrarUsuario();
+                    });
+                }
+            }
+        });
+    });
+}
+
+let usuarioStorage = localStorage.getItem('usuario');
+if (!usuarioStorage) {
+    // Pedir registro si no existe en el storage
+    registrarUsuario()
+        .then(({ nombre, apellido, edad }) => {
+            let usuario = { nombre, apellido, edad };
+            // Guardar los datos en localStorage
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+            Swal.fire(`¡Registro exitoso!`);
+        });
+}*/
+
+// Este remove esta para probar de borrarlo y crear otro
+//localStorage.removeItem('usuario');
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+// Variable para el contador de compras
+let cantCompras;
+
+// Obtener el valor actual de 'cantCompras' del localStorage
+cantCompras = parseInt(localStorage.getItem('cantCompras'));
+
+// Verificar si 'cantCompras' es NaN o no está definida
+if (isNaN(cantCompras)) {
+    // Si es NaN o no está definida, establecerla en 0
+    cantCompras = 0;
+    localStorage.setItem('cantCompras', cantCompras.toString());
+    console.log("Cantidad de compras inicializada en 0");
+} else {
+    console.log("Cantidad de compras actual:", cantCompras);
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
 
 // Definición del constructor Producto
 function Producto(nombre, desc, precio) {
@@ -183,15 +276,14 @@ document.addEventListener('keyup', function(event) {
 
 let comprarCarrito = document.querySelector('.comprarCarrito')
 comprarCarrito.addEventListener("click", function() {
-    
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
           cancelButton: "btn btn-danger"
         },
         buttonsStyling: false
-      });
-      swalWithBootstrapButtons.fire({
+    });
+    swalWithBootstrapButtons.fire({
         title: "Estas seguro?",
         text: "No se podrá volver atrás",
         icon: "warning",
@@ -199,23 +291,25 @@ comprarCarrito.addEventListener("click", function() {
         confirmButtonText: "No, cancelar!",
         cancelButtonText: "Si, estoy seguro",
         reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: "Acción cancelada",
-                text: "No se compraron los productos",
-                icon: "error"
-            });        
-        } else if (
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire({
-            title: "Comprar",
-            text: "Función no implementada",
-            icon: "question"
-          });
-        }
-      });
+    }).then((result) => {
+    if (result.isConfirmed) {
+        Swal.fire({
+            title: "Acción cancelada",
+            text: "No se compraron los productos",
+            icon: "error"
+        });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+        cantCompras++;
+        localStorage.setItem('cantCompras', cantCompras.toString());
+        console.log("Cantidad de compras actual:", cantCompras);
+
+        swalWithBootstrapButtons.fire({
+        title: "Comprar",
+        text: "Función no implementada",
+        icon: "question"
+        });
+    }
+    });
 });
 
 let verCarritoButton = document.querySelector('.verCarrito');
@@ -230,3 +324,17 @@ cargarProductos();
 mostrarCantidadProductosCarrito();
 mostrarPrecioTotalCarrito();
 
+/*
+const eventoFuturo = () => {
+    return new Promise((resolve, reject) => {
+        if (cantCompras > 0) {
+            resolve('Promesa resuelta');
+        } else {
+            reject('Promesa rechazada');
+        }
+    });
+};
+
+console.log(eventoFuturo(true)) // Promise { 'Promesa resuelta' }
+console.log(eventoFuturo(false)) // Promise { <rejected> 'Promesa rechazada' }
+*/
