@@ -37,16 +37,19 @@ input {
 
 button {
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-button:hover {
+.btnAgregarC{
+    background-color: #007bff;
+    color: #fff;
+}
+.btnAgregarC:hover{
     background-color: #0056b3;
 }
+
 
 .Cartas {
     display: flex;
@@ -106,6 +109,7 @@ button:hover {
 
 .verCarrito {
     background-color: #007bff;
+    color: #fff;
     border: 1px solid #007bff;
     border-radius: 4px;
 }
@@ -117,6 +121,7 @@ button:hover {
 
 .comprarCarrito {
     background-color: green;
+    color: #fff;
     border: 1px solid green;
     border-radius: 4px;
 }

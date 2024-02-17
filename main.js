@@ -1,5 +1,5 @@
 //Registrar un usuario
-
+/*
 function registrarUsuario() {
     return new Promise((resolve, reject) => {
         alert("Bienvenido al formulario de registro.");
@@ -28,14 +28,14 @@ function manejarRegistro() {
         });
 }
 
-manejarRegistro();
+manejarRegistro();*/
 
 //SE ESTÁ TRABAJANDO CON ESTO COMENTADO PARA BUSCAR LA SOLUCION A UN PROBLEMA QUE PASA
 //SI CUANDO SALE EL CUADRO DE DIALOGO EL USUARIO HACES CLICK FUERA DE ESTE,
 //EL CUADRO SE SALE, Y SE PUEDE NAVEGAR LIBREMENTE SIN TENER QUE REGISTRARSE
 
 // Registrar Usuario
-/*
+
 function registrarUsuario() {
     return new Promise((resolve, reject) => {
         Swal.fire({
@@ -75,7 +75,7 @@ if (!usuarioStorage) {
             localStorage.setItem('usuario', JSON.stringify(usuario));
             Swal.fire(`¡Registro exitoso!`);
         });
-}*/
+}
 
 // Este remove esta para probar de borrarlo y crear otro
 //localStorage.removeItem('usuario');
@@ -120,7 +120,8 @@ function actualizarLocalStorageCarrito() {
 // Se obtiene el contenedor de la lista del carrito
 let listaCarrito = document.querySelector('.listaCarrito');
 
-// Función para actualizar la lista del carrito en la página
+// Mostrar los productos del carrito en esta página
+/*
 function actualizarListaCarrito() {
     listaCarrito.innerHTML = '';
     carrito.forEach(function(producto) {
@@ -128,7 +129,7 @@ function actualizarListaCarrito() {
         productoItem.textContent = producto.nombre + ' - $' + producto.precio;
         listaCarrito.appendChild(productoItem);
     });
-}
+}*/
 
 // Función para mostrar la cantidad de productos en el carrito
 function mostrarCantidadProductosCarrito() {
@@ -147,7 +148,7 @@ function mostrarPrecioTotalCarrito() {
 function agregarAlCarrito(producto) {
     carrito.push(producto);
     actualizarLocalStorageCarrito();
-    actualizarListaCarrito();
+    //actualizarListaCarrito();
     mostrarCantidadProductosCarrito();
     mostrarPrecioTotalCarrito();
 }
@@ -193,6 +194,7 @@ function cargarProductos() {
 
         let button = document.createElement("button");
         button.textContent = "Agregar al carrito";
+        button.className = "btnAgregarC";
 
         button.addEventListener("click", function() {
             agregarAlCarrito(Producto1);
@@ -216,7 +218,7 @@ function cargarProductos() {
     });
 
     // Al cargar la página, se actualiza la lista del carrito
-    actualizarListaCarrito();
+    //actualizarListaCarrito();
 }
 
 // Para modificar un producto ya guardado en localStorage
@@ -232,12 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Borrar el localStorage del carrito
 document.querySelector('.borrarCarrito').onclick = function() {
-    carrito = [];
-    localStorage.removeItem('carrito');
-
-    mostrarCantidadProductosCarrito();
-    mostrarPrecioTotalCarrito();
-    
     Swal.fire({
         title: "Borrar carrito",
         text: "Estas seguro?",
@@ -249,6 +245,11 @@ document.querySelector('.borrarCarrito').onclick = function() {
         confirmButtonText: "Si"
     }).then((result) => {
         if (result.isConfirmed) {
+            carrito = [];
+            localStorage.removeItem('carrito');
+            mostrarCantidadProductosCarrito();
+            mostrarPrecioTotalCarrito();
+
             Swal.fire({
             title: "Borrar carrito",
             text: "Se eliminaron los productos del carrito",
