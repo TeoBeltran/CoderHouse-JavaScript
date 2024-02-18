@@ -1,5 +1,4 @@
 //Registrar un usuario
-
 function registrarUsuario() {
     return new Promise((resolve, reject) => {
         Swal.fire({

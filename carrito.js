@@ -1,3 +1,48 @@
+//Registrar un usuario
+function registrarUsuario() {
+    return new Promise((resolve, reject) => {
+        Swal.fire({
+            title: 'Registro de Usuario',
+            html:
+                '<input id="nombre" class="swal2-input" placeholder="Nombre">' +
+                '<input id="apellido" class="swal2-input" placeholder="Apellido">' +
+                '<input id="edad" type="number" class="swal2-input" placeholder="Edad">',
+            focusConfirm: false,
+            preConfirm: () => {
+                const nombre = Swal.getPopup().querySelector('#nombre').value;
+                const apellido = Swal.getPopup().querySelector('#apellido').value;
+                const edad = Swal.getPopup().querySelector('#edad').value;
+                if (nombre && apellido && !isNaN(edad) && edad >= 18 && edad < 110) {
+                    resolve({ nombre, apellido, edad });
+                    Swal.fire(`¡Registro exitoso!`);
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Por favor complete todos los campos correctamente.',
+                        icon: 'error'
+                    }).then(() => {
+                        registrarUsuario();
+                    });
+                }
+            }
+        });
+    });
+}
+
+let usuarioStorage = localStorage.getItem('usuario');
+if (!usuarioStorage) {
+    // Pedir registro si no existe en el storage
+    registrarUsuario()
+        .then(({ nombre, apellido, edad }) => {
+            let usuario = { nombre, apellido, edad };
+            // Guardar los datos en localStorage
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+            Swal.fire(`¡Registro exitoso!`);
+        });
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
 let carrito = JSON.parse(localStorage.getItem('carrito'));
 console.log(carrito);
 
@@ -12,8 +57,14 @@ if (carrito !== null) {
         let productoElement = document.createElement('div');
         productoElement.className = 'producto';
 
+        let imagenProducto = document.createElement('img');
+        imagenProducto.src = `img/${producto.id}.jpg`;
+        imagenProducto.alt = producto.nombre;
+        imagenProducto.width = 100;
+        imagenProducto.height = 100;
+
         let textoProducto = document.createElement('p');
-        textoProducto.textContent = producto.nombre + ' - $' + producto.precio;
+        textoProducto.textContent = producto.nombre + ' - $ ' + producto.precio;
 
         let botonEliminar = document.createElement('button');
         botonEliminar.textContent = 'Eliminar';
@@ -22,6 +73,8 @@ if (carrito !== null) {
             eliminarProducto(index);
         });
 
+        productoElement.appendChild(imagenProducto);
+        
         productoElement.appendChild(textoProducto);
         productoElement.appendChild(botonEliminar);
 
