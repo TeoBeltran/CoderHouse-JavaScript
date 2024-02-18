@@ -171,6 +171,7 @@ if (localStorage.getItem('productos')) {
 }
 
 // Función para cargar los productos en la página
+/*
 function cargarProductos() {
     productos.forEach(function(producto, index) {
         let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
@@ -220,6 +221,64 @@ function cargarProductos() {
     // Al cargar la página, se actualiza la lista del carrito
     //actualizarListaCarrito();
 }
+*/
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+function cargarProductos() {
+    fetch('productos.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(function(producto, index) {
+                let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
+
+                let productoCard1 = document.getElementById("productoCard");
+
+                let card = document.createElement("div");
+                card.className = "card";
+
+                let titulo = document.createElement("h2");
+                titulo.textContent = Producto1.nombre;
+
+                let blackBox = document.createElement("div");
+                blackBox.className = "black-box";
+
+                let desc = document.createElement("p");
+                desc.textContent = Producto1.desc;
+
+                let precio = document.createElement("p");
+                precio.textContent = Producto1.precio;
+
+                let button = document.createElement("button");
+                button.textContent = "Agregar al carrito";
+                button.className = "btnAgregarC";
+
+                button.addEventListener("click", function() {
+                    agregarAlCarrito(Producto1);
+                    //alert("Producto agregado al carrito");
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Producto agregado al carrito",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                });
+
+                card.appendChild(titulo);
+                card.appendChild(blackBox);
+                card.appendChild(desc);
+                card.appendChild(precio);
+                card.appendChild(button);
+
+                productoCard1.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Error al cargar los productos:', error));
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
 
 // Para modificar un producto ya guardado en localStorage
 document.addEventListener('DOMContentLoaded', function() {
@@ -338,4 +397,32 @@ const eventoFuturo = () => {
 
 console.log(eventoFuturo(true)) // Promise { 'Promesa resuelta' }
 console.log(eventoFuturo(false)) // Promise { <rejected> 'Promesa rechazada' }
+*/
+
+/*
+const btnGet = document.querySelector('#btnGet');
+const comentarios = document.querySelector('#comentarios');
+
+const render= (lista)=> {
+    console.table(lista);
+    comentarios.innerHTML = '';
+    lista.forEach(comentario=>{
+        comentarios.innerHTML +=
+        '<h1>Prueba</h1>'
+        '<p>Texto de prueba</p>'
+    })
+}
+
+btnGet.addEventListener('click', ()=>{
+    console.log('click')
+
+    const endPoint = 'https://pokeapi.co/api/v2/pokemon/'
+    fetch(endPoint)
+        .then(respuesta => { return respuesta.json() })
+        .then(respJSON => {
+            console.log(respJSON);
+
+            render(respJSON);
+        })
+})
 */
