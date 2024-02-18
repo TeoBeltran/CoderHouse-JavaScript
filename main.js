@@ -107,8 +107,6 @@ function agregarAlCarrito(producto) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-//let Producto1;
-
 async function cargarProductos() {
     try {
         const response = await fetch('productos.json');
