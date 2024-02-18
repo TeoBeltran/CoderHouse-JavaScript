@@ -1,8 +1,8 @@
 [
-    { "nombre": "Producto1", "desc": "Descripción del Producto 1", "precio": 29.99 },
-    { "nombre": "Producto2", "desc": "Descripción del Producto 2", "precio": 39.99 },
-    { "nombre": "Producto3", "desc": "Descripción del Producto 3", "precio": 49.99 },
-    { "nombre": "Producto4", "desc": "Descripción del Producto 4", "precio": 75.00 },
-    { "nombre": "Producto5", "desc": "Descripción del Producto 5", "precio": 98.00 }
-  ]
+  { "nombre": "Ryzen 7 5700", "desc": "Placa de video AMD", "precio": 400.00 },
+  { "nombre": "RAM 16Gb", "desc": "Memoria RAM de 16 gigabytes 3200MhZ", "precio": 55.00 },
+  { "nombre": "Mother B450M", "desc": "Mother Gigabyte B450M DS3H", "precio": 120.00 },
+  { "nombre": "Fuente 650W", "desc": "Fuente de poder de 650 watts", "precio": 65.00 },
+  { "nombre": "RTX 2060", "desc": "Placa de video marca NVIDIA", "precio": 600.00 }
+]
   

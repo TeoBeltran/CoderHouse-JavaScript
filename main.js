@@ -1,41 +1,4 @@
 //Registrar un usuario
-/*
-function registrarUsuario() {
-    return new Promise((resolve, reject) => {
-        alert("Bienvenido al formulario de registro.");
-
-        let nombre = prompt("Ingrese su nombre:");
-        let apellido = prompt("Ingrese su apellido:");
-        let edad = parseInt(prompt("Ingrese su edad:"));
-
-        if (nombre && apellido && !isNaN(edad) && edad >= 18) {
-            resolve("¡Registro exitoso!");
-        } else {
-            reject("Error: Por favor, complete todos los campos correctamente.");
-        }
-    });
-}
-
-function manejarRegistro() {
-    registrarUsuario()
-        .then((mensaje) => {
-            alert(mensaje);
-        })
-        .catch((error) => {
-            alert(error);
-
-            manejarRegistro();
-        });
-}
-
-manejarRegistro();*/
-
-//SE ESTÁ TRABAJANDO CON ESTO COMENTADO PARA BUSCAR LA SOLUCION A UN PROBLEMA QUE PASA
-//SI CUANDO SALE EL CUADRO DE DIALOGO EL USUARIO HACES CLICK FUERA DE ESTE,
-//EL CUADRO SE SALE, Y SE PUEDE NAVEGAR LIBREMENTE SIN TENER QUE REGISTRARSE
-
-// Registrar Usuario
-
 function registrarUsuario() {
     return new Promise((resolve, reject) => {
         Swal.fire({
@@ -51,6 +14,7 @@ function registrarUsuario() {
                 const edad = Swal.getPopup().querySelector('#edad').value;
                 if (nombre && apellido && !isNaN(edad) && edad >= 18) {
                     resolve({ nombre, apellido, edad });
+                    Swal.fire(`¡Registro exitoso!`);
                 } else {
                     Swal.fire({
                         title: 'Error',
@@ -80,7 +44,6 @@ if (!usuarioStorage) {
 // Este remove esta para probar de borrarlo y crear otro
 //localStorage.removeItem('usuario');
 
-
 //--------------------------------------------------------------------------------------------------------------------------------
 
 // Variable para el contador de compras
@@ -101,7 +64,6 @@ if (isNaN(cantCompras)) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-
 // Definición del constructor Producto
 function Producto(nombre, desc, precio) {
     this.nombre = nombre;
@@ -120,17 +82,6 @@ function actualizarLocalStorageCarrito() {
 // Se obtiene el contenedor de la lista del carrito
 let listaCarrito = document.querySelector('.listaCarrito');
 
-// Mostrar los productos del carrito en esta página
-/*
-function actualizarListaCarrito() {
-    listaCarrito.innerHTML = '';
-    carrito.forEach(function(producto) {
-        let productoItem = document.createElement('p');
-        productoItem.textContent = producto.nombre + ' - $' + producto.precio;
-        listaCarrito.appendChild(productoItem);
-    });
-}*/
-
 // Función para mostrar la cantidad de productos en el carrito
 function mostrarCantidadProductosCarrito() {
     let cantidadProductos = document.querySelector('.cantidadProductos');
@@ -148,151 +99,85 @@ function mostrarPrecioTotalCarrito() {
 function agregarAlCarrito(producto) {
     carrito.push(producto);
     actualizarLocalStorageCarrito();
-    //actualizarListaCarrito();
     mostrarCantidadProductosCarrito();
     mostrarPrecioTotalCarrito();
 }
 
-// Definición de los productos
-let productos;
-
-if (localStorage.getItem('productos')) {
-    productos = JSON.parse(localStorage.getItem('productos'));
-} else {
-    productos = [
-        { nombre: "Producto1", desc: "Descripción del Producto 1", precio: 29.99 },
-        { nombre: "Producto2", desc: "Descripción del Producto 2", precio: 39.99 },
-        { nombre: "Producto3", desc: "Descripción del Producto 3", precio: 49.99 },
-        { nombre: "Producto4", desc: "Descripción del Producto 4", precio: 75.00 },
-        { nombre: "Producto5", desc: "Descripción del Producto 5", precio: 98.00 }
-    ];
-
-    localStorage.setItem('productos', JSON.stringify(productos));
-}
-
-// Función para cargar los productos en la página
-/*
-function cargarProductos() {
-    productos.forEach(function(producto, index) {
-        let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
-
-        let productoCard1 = document.getElementById("productoCard");
-
-        let card = document.createElement("div");
-        card.className = "card";
-
-        let titulo = document.createElement("h2");
-        titulo.textContent = Producto1.nombre;
-
-        let blackBox = document.createElement("div");
-        blackBox.className = "black-box";
-
-        let desc = document.createElement("p");
-        desc.textContent = Producto1.desc;
-
-        let precio = document.createElement("p");
-        precio.textContent = Producto1.precio;
-
-        let button = document.createElement("button");
-        button.textContent = "Agregar al carrito";
-        button.className = "btnAgregarC";
-
-        button.addEventListener("click", function() {
-            agregarAlCarrito(Producto1);
-            //alert("Producto agregado al carrito");
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Producto agregado al carrito",
-                showConfirmButton: false,
-                timer: 1000
-            });
-        });
-
-        card.appendChild(titulo);
-        card.appendChild(blackBox);
-        card.appendChild(desc);
-        card.appendChild(precio);
-        card.appendChild(button);
-
-        productoCard1.appendChild(card);
-    });
-
-    // Al cargar la página, se actualiza la lista del carrito
-    //actualizarListaCarrito();
-}
-*/
-
 //--------------------------------------------------------------------------------------------------------------------------------
 
-function cargarProductos() {
-    fetch('productos.json')
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(function(producto, index) {
-                let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
+async function cargarProductos() {
+    try {
+        const response = await fetch('productos.json');
+        const data = await response.json();
 
-                let productoCard1 = document.getElementById("productoCard");
+        data.forEach(function(producto, index) {
+            let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
 
-                let card = document.createElement("div");
-                card.className = "card";
+            let productoCard1 = document.getElementById("productoCard");
 
-                let titulo = document.createElement("h2");
-                titulo.textContent = Producto1.nombre;
+            let card = document.createElement("div");
+            card.className = "card";
 
-                let blackBox = document.createElement("div");
-                blackBox.className = "black-box";
+            let titulo = document.createElement("h2");
+            titulo.textContent = Producto1.nombre;
 
-                let desc = document.createElement("p");
-                desc.textContent = Producto1.desc;
+            let blackBox = document.createElement("div");
+            blackBox.className = "black-box";
 
-                let precio = document.createElement("p");
-                precio.textContent = Producto1.precio;
+            let desc = document.createElement("p");
+            desc.textContent = Producto1.desc;
 
-                let button = document.createElement("button");
-                button.textContent = "Agregar al carrito";
-                button.className = "btnAgregarC";
+            let precio = document.createElement("p");
+            precio.textContent = Producto1.precio;
 
-                button.addEventListener("click", function() {
-                    agregarAlCarrito(Producto1);
-                    //alert("Producto agregado al carrito");
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Producto agregado al carrito",
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
+            let button = document.createElement("button");
+            button.textContent = "Agregar al carrito";
+            button.className = "btnAgregarC";
+
+            button.addEventListener("click", function() {                    
+                agregarAlCarrito(Producto1);
+                //alert("Producto agregado al carrito");
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Producto agregado al carrito",
+                    showConfirmButton: false,
+                    timer: 1000
                 });
-
-                card.appendChild(titulo);
-                card.appendChild(blackBox);
-                card.appendChild(desc);
-                card.appendChild(precio);
-                card.appendChild(button);
-
-                productoCard1.appendChild(card);
             });
-        })
-        .catch(error => console.error('Error al cargar los productos:', error));
+
+            card.appendChild(titulo);
+            card.appendChild(blackBox);
+            card.appendChild(desc);
+            card.appendChild(precio);
+            card.appendChild(button);
+
+            productoCard1.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
+    }
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------
-
-
-// Para modificar un producto ya guardado en localStorage
-document.addEventListener('DOMContentLoaded', function() {
-    let volverCargarButton = document.querySelector('.volverCargar');
-
-    volverCargarButton.addEventListener('click', function() {
-        localStorage.removeItem('productos');
-
-        location.reload();
-    });
-});
 
 // Borrar el localStorage del carrito
-document.querySelector('.borrarCarrito').onclick = function() {
+function verificarUsuarioAntesDeLimpiarCarrito() {
+    let usuarioStorage = localStorage.getItem('usuario');
+    if (!usuarioStorage) {
+        registrarUsuario()
+            .then(({ nombre, apellido, edad }) => {
+                let usuario = { nombre, apellido, edad };
+                localStorage.setItem('usuario', JSON.stringify(usuario));
+                Swal.fire(`¡Registro exitoso!`);
+                limpiarCarrito();
+            });
+    } else {
+        limpiarCarrito();
+    }
+}
+
+function limpiarCarrito() {
     Swal.fire({
         title: "Borrar carrito",
         text: "Estas seguro?",
@@ -310,32 +195,36 @@ document.querySelector('.borrarCarrito').onclick = function() {
             mostrarPrecioTotalCarrito();
 
             Swal.fire({
-            title: "Borrar carrito",
-            text: "Se eliminaron los productos del carrito",
-            icon: "success"
+                title: "Borrar carrito",
+                text: "Se eliminaron los productos del carrito",
+                icon: "success"
             });
         }
     });
+}
 
-    setTimeout(function() {
-        location.reload();
-    }, 2500);
+let limpiarCarritoButton = document.querySelector('.borrarCarrito');
+limpiarCarritoButton.onclick = function() {
+    verificarUsuarioAntesDeLimpiarCarrito();
 };
-document.addEventListener('keyup', function(event) {
-    if (event.key === 'Delete') {
-        carrito = [];
-        localStorage.removeItem('carrito');
 
-        mostrarCantidadProductosCarrito();
-        mostrarPrecioTotalCarrito();
-        
-        alert("Productos eliminados del carrito");
-        location.reload();
+// Comprar
+function verificarUsuarioAntesDeComprar() {
+    let usuarioStorage = localStorage.getItem('usuario');
+    if (!usuarioStorage) {
+        registrarUsuario()
+            .then(({ nombre, apellido, edad }) => {
+                let usuario = { nombre, apellido, edad };
+                localStorage.setItem('usuario', JSON.stringify(usuario));
+                Swal.fire(`¡Registro exitoso!`);
+                realizarCompra();
+            });
+    } else {
+        realizarCompra();
     }
-});
+}
 
-let comprarCarrito = document.querySelector('.comprarCarrito')
-comprarCarrito.addEventListener("click", function() {
+function realizarCompra() {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -352,77 +241,55 @@ comprarCarrito.addEventListener("click", function() {
         cancelButtonText: "Si, estoy seguro",
         reverseButtons: true
     }).then((result) => {
-    if (result.isConfirmed) {
-        Swal.fire({
-            title: "Acción cancelada",
-            text: "No se compraron los productos",
-            icon: "error"
-        });
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-        cantCompras++;
-        localStorage.setItem('cantCompras', cantCompras.toString());
-        console.log("Cantidad de compras actual:", cantCompras);
+        if (result.dismiss === Swal.DismissReason.cancel) {
+            cantCompras++;
+            localStorage.setItem('cantCompras', cantCompras.toString());
+            console.log("Cantidad de compras actual:", cantCompras);
 
-        swalWithBootstrapButtons.fire({
-        title: "Comprar",
-        text: "Función no implementada",
-        icon: "question"
-        });
-    }
+            swalWithBootstrapButtons.fire({
+                title: "Comprar",
+                text: "Función no implementada",
+                icon: "question"
+            });
+        } else if (result.isConfirmed) {
+            Swal.fire({
+                title: "Acción cancelada",
+                text: "No se compraron los productos",
+                icon: "error"
+            });
+        }
     });
+}
+
+let comprarCarritoButton = document.querySelector('.comprarCarrito');
+comprarCarritoButton.addEventListener("click", function() {
+    verificarUsuarioAntesDeComprar();
 });
+
+// Ir al carrito
+function verificarUsuarioAntesDeVerCarrito() {
+    let usuarioStorage = localStorage.getItem('usuario');
+    if (!usuarioStorage) {
+        registrarUsuario()
+            .then(({ nombre, apellido, edad }) => {
+                let usuario = { nombre, apellido, edad };
+                localStorage.setItem('usuario', JSON.stringify(usuario));
+                Swal.fire(`¡Registro exitoso!`);
+                window.location.href = 'carrito.html';
+            });
+    } else {
+        window.location.href = 'carrito.html';
+    }
+}
 
 let verCarritoButton = document.querySelector('.verCarrito');
 verCarritoButton.addEventListener("click", function() {
-    window.location.href = 'carrito.html';
+    verificarUsuarioAntesDeVerCarrito();
 });
 
-// Llamada para cargar los productos en la página
+// Carga de productos y muestra de cantidad y precio
 cargarProductos();
 
-// Llamadas iniciales para mostrar la cantidad de productos y el precio total del carrito
 mostrarCantidadProductosCarrito();
 mostrarPrecioTotalCarrito();
 
-/*
-const eventoFuturo = () => {
-    return new Promise((resolve, reject) => {
-        if (cantCompras > 0) {
-            resolve('Promesa resuelta');
-        } else {
-            reject('Promesa rechazada');
-        }
-    });
-};
-
-console.log(eventoFuturo(true)) // Promise { 'Promesa resuelta' }
-console.log(eventoFuturo(false)) // Promise { <rejected> 'Promesa rechazada' }
-*/
-
-/*
-const btnGet = document.querySelector('#btnGet');
-const comentarios = document.querySelector('#comentarios');
-
-const render= (lista)=> {
-    console.table(lista);
-    comentarios.innerHTML = '';
-    lista.forEach(comentario=>{
-        comentarios.innerHTML +=
-        '<h1>Prueba</h1>'
-        '<p>Texto de prueba</p>'
-    })
-}
-
-btnGet.addEventListener('click', ()=>{
-    console.log('click')
-
-    const endPoint = 'https://pokeapi.co/api/v2/pokemon/'
-    fetch(endPoint)
-        .then(respuesta => { return respuesta.json() })
-        .then(respJSON => {
-            console.log(respJSON);
-
-            render(respJSON);
-        })
-})
-*/
