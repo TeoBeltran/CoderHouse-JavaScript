@@ -1,4 +1,5 @@
 //Registrar un usuario
+
 function registrarUsuario() {
     return new Promise((resolve, reject) => {
         Swal.fire({
@@ -12,7 +13,7 @@ function registrarUsuario() {
                 const nombre = Swal.getPopup().querySelector('#nombre').value;
                 const apellido = Swal.getPopup().querySelector('#apellido').value;
                 const edad = Swal.getPopup().querySelector('#edad').value;
-                if (nombre && apellido && !isNaN(edad) && edad >= 18) {
+                if (nombre && apellido && !isNaN(edad) && edad >= 18 && edad < 110) {
                     resolve({ nombre, apellido, edad });
                     Swal.fire(`¡Registro exitoso!`);
                 } else {
@@ -65,7 +66,8 @@ if (isNaN(cantCompras)) {
 //--------------------------------------------------------------------------------------------------------------------------------
 
 // Definición del constructor Producto
-function Producto(nombre, desc, precio) {
+function Producto(id, nombre, desc, precio) {
+    this.id = id;
     this.nombre = nombre;
     this.desc = desc;
     this.precio = precio;
@@ -105,13 +107,15 @@ function agregarAlCarrito(producto) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
+//let Producto1;
+
 async function cargarProductos() {
     try {
         const response = await fetch('productos.json');
         const data = await response.json();
 
         data.forEach(function(producto, index) {
-            let Producto1 = new Producto(producto.nombre, producto.desc, producto.precio);
+            let Producto1 = new Producto(producto.id, producto.nombre, producto.desc, producto.precio);
 
             let productoCard1 = document.getElementById("productoCard");
 
@@ -121,22 +125,25 @@ async function cargarProductos() {
             let titulo = document.createElement("h2");
             titulo.textContent = Producto1.nombre;
 
-            let blackBox = document.createElement("div");
-            blackBox.className = "black-box";
+            let imagen = document.createElement("img");
+            imagen.src = `img/${producto.id}.jpg`;
+            imagen.alt = Producto1.nombre; 
+            imagen.className = "producto-imagen"; 
+            imagen.width = 200;
+            imagen.height = 200;
+
 
             let desc = document.createElement("p");
             desc.textContent = Producto1.desc;
-
             let precio = document.createElement("p");
             precio.textContent = Producto1.precio;
-
             let button = document.createElement("button");
             button.textContent = "Agregar al carrito";
             button.className = "btnAgregarC";
 
             button.addEventListener("click", function() {                    
+                let nuevoProducto = new Producto(producto.id, producto.nombre, producto.desc, producto.precio);
                 agregarAlCarrito(Producto1);
-                //alert("Producto agregado al carrito");
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -147,7 +154,7 @@ async function cargarProductos() {
             });
 
             card.appendChild(titulo);
-            card.appendChild(blackBox);
+            card.appendChild(imagen);
             card.appendChild(desc);
             card.appendChild(precio);
             card.appendChild(button);
@@ -225,33 +232,28 @@ function verificarUsuarioAntesDeComprar() {
 }
 
 function realizarCompra() {
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger"
-        },
-        buttonsStyling: false
-    });
-    swalWithBootstrapButtons.fire({
-        title: "Estas seguro?",
-        text: "No se podrá volver atrás",
+    Swal.fire({
+        title: "Confirmar compra",
+        text: "Estas seguro?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "No, cancelar!",
-        cancelButtonText: "Si, estoy seguro",
-        reverseButtons: true
+        cancelButtonText: "No",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si"
     }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.cancel) {
-            cantCompras++;
-            localStorage.setItem('cantCompras', cantCompras.toString());
-            console.log("Cantidad de compras actual:", cantCompras);
+        if (result.isConfirmed) {
+            carrito = [];
+            localStorage.removeItem('carrito');
+            mostrarCantidadProductosCarrito();
+            mostrarPrecioTotalCarrito();
 
-            swalWithBootstrapButtons.fire({
-                title: "Comprar",
-                text: "Función no implementada",
-                icon: "question"
+            Swal.fire({
+                title: "Comprar productos",
+                text: "Compra confirmada",
+                icon: "success"
             });
-        } else if (result.isConfirmed) {
+        } else {
             Swal.fire({
                 title: "Acción cancelada",
                 text: "No se compraron los productos",
@@ -285,6 +287,12 @@ function verificarUsuarioAntesDeVerCarrito() {
 let verCarritoButton = document.querySelector('.verCarrito');
 verCarritoButton.addEventListener("click", function() {
     verificarUsuarioAntesDeVerCarrito();
+});
+
+let recargarButton = document.querySelector('.volverCargar');
+recargarButton.addEventListener("click", function() {
+    localStorage.removeItem('usuario');
+    location.reload();
 });
 
 // Carga de productos y muestra de cantidad y precio
